@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <!-- <script type="module" src="classes/Item.js"></script> 
+    <script type="module" src="classes/TodoList.js"></script> -->
+    
+    <title>ToDoList</title>
+</head>
+<body>
+    <section id="liveAlertPlaceholder" role="alert"></section>
+    <section class="container pt-5" id="todolist">
+        <form class="d-flex p-4">
+            <input class="form-control" type="text" name="title" placeholder="Acheter des patates..." data-com.bitwarden.browser.user-edited="yes">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+        <main>
+            <div class="btn-group mb-4" role="group">
+                <button class="btn btn-outline-primary active" type="button" data-filter="all">Toutes</button>
+                <button class="btn btn-outline-primary" type="button" data-filter="todo">A faire</button>
+                <button class="btn btn-outline-primary" type="button" data-filter="done">Faites</button>
+            </div>
+
+            <ul class="list-group">
+                <!-- <li class="todo list-group-item d-flex align-items-center">
+                    <input type="checkbox" id="todo-1" class="form-check-input">
+                    <label for="todo-1" class="ms-2 form-check-label">Tâche à faire 2</label>
+                    <label class="ms-auto btn btn-danger btn-sm">
+                        <i class="bi-trash ms-auto btn btn-danger btn-sm"></i>
+                    </label>
+                </li> -->
+                <!-- <li class="todo list-group-item d-flex align-items-center">
+                    <input type="checkbox" id="todo-2" class="form-check-input">
+                    <label for="todo-2" class="ms-2 form-check-label">Tâche à faire 1</label>
+                    <label class="ms-auto btn btn-danger btn-sm">
+                        <i class="bi-trash ms-auto btn btn-danger btn-sm"></i>
+                    </label> 
+                </li> -->
+            </ul>
+        </main>
+    </section>
+    <script type="module" src="classes/Controller.js"></script>
+</body>
+</html>

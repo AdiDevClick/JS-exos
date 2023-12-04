@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="exos.js"></script>    
+    <script src="classes/Student.js"></script>
+    <script src="classes/SuperStudent.js"></script> 
+    <!-- <script type="module" rel="modulepreloaded"> 
+    import {myExports as Rectangle} from './classes/Libraries.js'
+    </script> -->
+
+    
+    <!-- <script src="classes/Rectangle.js"></script> 
+    <script src="classes/Square.js"></script>  -->
+    
+    <script src="classes/Book.js"></script>
+    <script src="classes/Library.js"></script> 
+    <script src="classes/Libraries.js" type="module"></script>
+    <script src="classes/app.js" type="module"></script>
+    <script type="module" src="classes/app2.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <section class="error"></section>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. <span class="spoiler">Totam eveniet aperiam quidem. 
+        Asperiores</span> vel dolorum inventore. Recusandae fuga temporibus animi aliquid sapiente est a, 
+        expedita quis doloremque libero iste vitae!
+        Lorem ipsum dolor sit amet <span class="spoiler">consectetur adipisicing elit</span>. Laborum earum voluptatum illo, 
+        laudantium voluptates iste nisi unde odit quas est aspernatur officiis non ullam aliquid, 
+        id sit natus modi error.
+    </p>
+    <form action="">
+        <label for="firstname">Prénom</label>
+        <input type="text" name="firstname" id="firstname">
+        <button type="submit">Envoyer</button>
+    </form>
+    
+    <button type="submit"><span>Bonjour les gens</span></button>
+    <a href="https://google.fr" title="google link">Lien vers Google</a>
+    <div class="rectangle">
+        <p></p>
+    </div>
+
+    <section id="lastPosts">
+        
+    </section>
+    <!-- <script type="module" rel="modulepreloaded"> 
+    import Rectangle from './classes/Rectangle.js'
+    </script> -->
+    <!-- <script src="classes/Libraries.js" type="module"></script> -->
+    <script>
+        
+        const Students = [
+            {
+                lastname: 'Doe',
+                firstname: 'John'
+            },
+            {
+                lastname: 'Doe',
+                firstname: 'Jane'
+            },
+        ]
+        // const John = new Student('Doe', 'John')
+        // const Jane = new Student('Doe', 'Jane')
+        const John = new SuperStudent(Students[0].lastname, Students[0].firstname, [1, 10, 8])
+        const Jane = new Student(Students[1].lastname, Students[1].firstname)
+        Jane.notes = [15, 18, 19]
+
+        // John.calculateAvg(John.name)
+        // console.log(John.canPass(), Jane.canPass())      
+        console.log(`${John.name}, 
+        ${Jane.name}`)  
+
+        console.log(Jane.canPass());
+
+        
+        // const rectangle = new Rectangle(20, 10)
+        // console.log(rectangle.perimeter); // 60
+        // console.log(rectangle.isValid);  // true
+
+        // // const r2 = promptRectangle()
+        // // console.log(r2.perimeter); // false
+        // // console.log(r2.isValid);
+
+        // const square = new Square(10) // 40
+        // console.log(square.perimeter);
+        // console.log(square.isValid); // true
+
+        // console.log(square.isBiggerThan(rectangle)); // false
+        // console.log(rectangle.isBiggerThan(square)); // true
+        
+        const b = new Book('Seigneur des anneaux', 200);
+        console.log(b.page)
+        b.nextPage()
+        b.nextPage()
+        b.nextPage()
+        b.nextPage()
+        console.log(b.page)
+        b.close()
+        console.log(b.page)
+
+        const l = new Library()
+        l.addBook(b)
+        l.addBooks([
+            new Book('Ready player one', 100),
+            new Book('Oui-oui', 10),
+            new Book('Sillage', 50),
+        ])
+        console.log(l);
+        console.log(l.findBooksByTitleLetter('S')) // On peut utiliser filter()
+
+        console.log(l.books[2]);
+        l.books[2].nextPage()
+        console.log(l.books[2].page);
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        l.books[2].nextPage()
+        console.log(l.books[2].page);
+        l.books[2].close()
+        console.log(l.books[2].page);
+
+        console.log(l.findByLetter("X"))
+
+        console.log(l.findByTitle());
+
+        setTimeout(() => {
+            console.log('Bonjour, Jai été exécuté il y a 1s')
+            setTimeout(() => {
+                console.log('Je suis exécuté 1s après Bonjour...')
+                setTimeout(() => {
+                    console.log("Je viens de créer mon premier callback hell ! Il vient de se créer 3 secondes après le premier");
+                }, 1000)
+            }, 1000)
+        }, 1000)
+
+        // function decompte(number) {            
+        //     const t = setInterval(() => {
+        //         console.log(number);
+        //         if (number <= 0) {
+        //             clearInterval(t)
+        //             throw new Error('Félicitations !!')
+        //         } else {
+        //             number--
+        //         }
+        //     }, 1000)
+        // }
+
+
+function decompte(n) {
+    console.log('Plus que', n);
+    if (n <= 0) {
+        throw new Error('Féliciations !!')
+    } 
+    setTimeout(() => decompte(--n), 1000)
+}           
+
+function waitSync(duration) {
+    const t = Date.now()
+    while (Date.now() - t < duration) {
+        //
+    }
+}
+
+function wait(duration) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(duration)
+        }, duration);
+    })
+}
+
+// async function waitAndFail(duration) {
+//         setTimeout(() => {
+//             throw new Error('Voilà mon erreur', {cause: `${duration}`})
+//         }, duration);   
+// }
+
+function waitAndFail(duration) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            reject(duration)
+            // throw new Error('Voilà mon erreur', {cause: `${duration}`})
+        }, duration);
+    })    
+}
+
+async function main() {
+    try {
+        await wait(2000)
+        console.log('Bonjour mon await 1 après 1s');
+        await waitAndFail(2000)
+        console.log("Après 2s, j'ai forcé un fail");
+        // return 'oh yeah, je retourne quelque chose'
+    } catch(e) {
+        console.log('Erreur', e.message, {cause: e});
+    }
+    
+}
+
+main()
+
+async function main2() {
+    const duration = await wait(2000)
+    console.log(`Duration : ${duration}`);
+    return 5
+}
+
+main2()
+    .then((n) => {
+        console.log(n)
+    })
+
+wait(2000)
+    .then(() => {
+        console.log('Attente 2s')
+        return wait(1000)
+    })
+    .then(() => {        
+        console.log('Attente 1s');
+        return wait(3000)
+    })
+    .then(() => {
+        console.log('Attente 3s');
+        return waitAndFail(2000)
+    })
+    .catch((e) => {
+        console.log('Mon erreur:', e, 'plus tard');
+    })
+
+// Instant catch sans laisser de message grace à "null":
+waitAndFail(2000)
+    .then(() => {
+        console.log('Attente 2s')
+        return waitAndFail(2000)
+    })
+    .then(() => {
+        console.log('Nouvelle attente de 2s');
+        return wait(3000)
+    })
+    .catch(() => null)
+    
+
+Promise.race([wait(2000), waitAndFail(3000)])
+    .then(console.log)
+    .catch((e) => {
+        console.log('Erreur Promise All : ', e)
+    })
+
+const p = new Promise((resolve) => {
+    console.log('Hello Les copains')
+    resolve(2)
+})
+    .then(() => console.log('Pourquoi tu bloques ?'))
+waitSync(2000)
+console.log('Les Gens');
+
+// p   
+//     .then((n) => {
+//         console.log("Mon nombre est:", n);
+//         return 5
+//     })
+//     .then((n) => {
+//         console.log('Le nouveau nombre est:', n);       // Retourne undefined au niveau de "n" si le premier 'then' ne return rien
+//     })    
+//     .catch((e) => {
+//             console.log('Grosse erreur', e);
+//     })
+//     .finally((n) => {
+//         console.log("Ce sera au final toujours ce que je viens d'écrire", n);
+//     })
+
+console.log(p);
+
+async function fetchUsers() {
+    const r = await fetch('https://jsonplaceholder.typicode.com/users/?_limit=5', {
+        method: 'GET',
+        headers: {
+            "Accept": "application/json",
+            //"Content-Type": "application/json" // A spécifier pour l'envoi VERS le serveur - Inutile en GET
+        },
+        // body: JSON.stringify({title: 'Mon Premier JsonTitle'}) // A spécifier pour l'envoi VERS le serveur
+    })
+    console.log(r.headers.get('Content-Type'));
+    if (!r.ok === true) {
+        throw new Error('Impossible de contacter le serveur', {cause: {code: r.status, okStatus: r.ok}})        
+    }
+    //const data = await r.json()
+    return r.json()
+}
+
+fetchUsers()
+    .then(users => console.log(users))
+    .catch((e) => {
+        console.log(e.message, e.cause);
+    })
+
+const a = new AbortController()
+Promise.race([
+    fetch('https://jsonplaceholder.typicode.com/users/?_limit=5&_delay=2000', {
+        signal: a.signal
+    }),
+    fetch('https://jsonplaceholder.typicode.com/posts/?_limit=3', {
+        signal: a.signal
+    })
+])  
+    .then((r) => r.json())
+    .then(body => {
+        a.abort()
+        console.log(body)
+    })
+// fetch('https://jsonplaceholder.typicode.com/users')
+//     .then(r => r.json())
+//     .then(body => console.log(body))
+
+        // function decompte(number) {
+        //     const t = setInterval(() => {
+        //         if (number >= 0) {
+        //             console.log(number--);
+        //         } else {
+        //             clearInterval(t)
+        //             throw new Error('Félicitations !')
+        //         }                
+        //     }, 1000)
+        // }
+
+        // function decompte(number) {
+        //     console.log(number);
+        //     if (number <= 0) {
+        //         return
+        //     }
+        //     setTimeout(() => decompte (number -1), 1000)
+        // }
+
+        console.log(decompte(5)) 
+
+
+    </script>   
+</body>
+</html>
