@@ -3,7 +3,7 @@
 // import { TodoList } from "./TodoList.js"
 
 import { showMessage } from "./app.js"
-import { TodoList } from "./todoList.js"
+import { TodoList } from "./TodoList.js"
 
 export class Item 
 {

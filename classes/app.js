@@ -44,12 +44,34 @@ async function fetchPosts() {
 //     // return wrapper
 // }
 
+/**
+ * Permet de retirer un ou plusieurs éléments du DOM
+ * @param {HTMLElement} wrapperSelector 
+ */
 export function hideElements(wrapperSelector) {
     const wrappers = document.querySelectorAll(wrapperSelector)
     wrappers.forEach(wrapper => {
         wrapper.remove()
     })
 }
+
+export function removeClass(select, classes) {
+    const selector = document.querySelector(select)
+        selector.classList.remove(classes)
+}
+
+export function addClass(select, classes) {
+    const selector = document.querySelector(select)
+        selector.classList.add(classes)
+}
+
+
+
+
+// export function hideElement(Selector) {
+//     const wrapper = document.querySelector(Selector)
+//     wrapper.remove()
+// }
 // export function hideWrappers(wrapperSelector) {
 //     const wrappers = document.querySelectorAll(wrapperSelector)
 //     wrappers.forEach(wrapper => {
@@ -65,10 +87,10 @@ export function hideElements(wrapperSelector) {
 // }
 
 export function createTodos(wrapperSelector, tagName, checkbox, label, icon, arrElements) {
-    const wrapper = document.querySelector(wrapperSelector)   
+    const wrapper = document.querySelector(wrapperSelector)  
     for (const arrElement of arrElements) {
         if  (arrElement) {
-
+            
             let li_object = {
                 id: 'todo-wrapper-'+arrElement.id,
                 class: 'todo list-group-item d-flex align-items-center'
@@ -92,6 +114,10 @@ export function createTodos(wrapperSelector, tagName, checkbox, label, icon, arr
             const newLabel = createElements(label, label_object)
             const newIcon = createElements(icon, icon_object)
 
+            if (arrElement?.completed == true) {
+                newCheckbox.setAttribute('checked', '')
+            }
+
             newLabel.innerText = arrElement.title
 
             newTodoList.appendChild(newCheckbox)
@@ -107,15 +133,13 @@ export function createTodos(wrapperSelector, tagName, checkbox, label, icon, arr
 export function createTodo(wrapperSelector, tagName, checkbox, label, icon, arrElements) {
     const wrapper = document.querySelector(wrapperSelector)   
     let ids = ''
-    // let labels = ''
-    
-
-
+    // let isCompleted = ''
     for (const element of arrElements) {
-        if  (element) {
-        ids = element.id
-        }
-        // labels = element.title
+        ids = element?.id
+        // if (element?.completed == true) {
+        //     // isCompleted = true
+        //     console.log('true')
+        // }
     }
 
     let icon_object = {
@@ -127,7 +151,7 @@ export function createTodo(wrapperSelector, tagName, checkbox, label, icon, arrE
         class: 'todo list-group-item d-flex align-items-center',
         id: 'todo-wrapper-'+ids
     }
-    let checkbox_object = {
+    let checkbox_object = {    
         type: 'checkbox',
         id: 'todo-'+ids,
         class: 'form-check-input'
@@ -142,18 +166,25 @@ export function createTodo(wrapperSelector, tagName, checkbox, label, icon, arrE
     const newLabel = createElements(label, label_object)
     const newIcon = createElements(icon, icon_object)
 
-    for (const arrElement of arrElements) {  
-        if (arrElement) {
-            newLabel.innerText = arrElement.title
-        }         
-    } 
+    // const checkedValue = newCheckbox.setAttribute('checked', '')
+
+    if (arrElements) {
+        for (const arrElement of arrElements) {  
+            newLabel.innerText = arrElement?.title          
+            // if (arrElement.completed === false) {
+            // // if (isCompleted && newCheckbox) {
+            //     newCheckbox.setAttribute('checked', '')
+            // }
+        } 
+    }
+    
 
     // newLabel.innerText = labels
-        newTodoList.appendChild(newCheckbox)
-        newTodoList.appendChild(newLabel)
-        newTodoList.appendChild(newIcon)
+    newTodoList.appendChild(newCheckbox)
+    newTodoList.appendChild(newLabel)
+    newTodoList.appendChild(newIcon)
 
-        wrapper.append(newTodoList)    
+    wrapper.append(newTodoList)    
     return wrapper
 }
 

@@ -1,6 +1,6 @@
 // import { Item } from "./item.js"
 
-import { createTodo, createTodos, hideElements, showMessage } from "./app.js"
+import { addClass, createTodo, createTodos, hideElements, removeClass, showMessage } from "./app.js"
 import { Item } from "./item.js"
 
 export class TodoList 
@@ -44,17 +44,33 @@ export class TodoList
     // }
 
     modifyStatus() {
-        let listCheckBoxes = document.querySelectorAll('input[type="checkbox"]') ; // les boutons radio
+        const selectAll = document.querySelector('button[data-filter="all"]')
+        const filteredByAll = selectAll.classList.contains('active')
+        let listCheckBoxes = document.querySelectorAll('input[type="checkbox"]') ; // les boutons checkbox
         listCheckBoxes.forEach(box => {
-            box.addEventListener("change", (event) => {    // On écoute les btn radio
+            box.addEventListener("change", (event) => {    // On écoute les btn checkbox
                 const checkedBox = event.target
-                console.log(checkedBox)
                 if (checkedBox) {
-                    this.list.filter((el) =>  el?.id === checkedBox.id )
-                    console.log(checkedBox.id)
-                    console.log(event.target)
+                    this.list.filter((el) =>  {
+                        if ('todo-'+el?.id === checkedBox.id && checkedBox.checked === true) {
+                            // checkedBox.checked === true
+                            el.completed = true
+                            checkedBox.classList.add('active') 
+                            checkedBox.setAttribute('checked', '')
+                            if (!filteredByAll) {
+                                hideElements('#todo-wrapper-'+el.id)
+                            } 
+                        }
+                        if ('todo-'+el?.id == checkedBox.id && checkedBox.checked === false) {
+                            el.completed = false
+                            checkedBox.classList.remove('active') 
+                            checkedBox.removeAttribute('checked')
+                            if (!filteredByAll) {
+                                hideElements('#todo-wrapper-'+el.id)
+                            } 
+                        }
+                    })
                 }
-                console.log(event.target.checked)
         })
 
         // let icons = document.getElementsByClassName('bi-trash')
@@ -93,7 +109,6 @@ export class TodoList
                 })
         //this.completed
     }
-    
 
     async fetchData() {
         try {
@@ -117,10 +132,6 @@ export class TodoList
             // }
             // te()
             this.addTodos2(posts) 
-            // console.log(this.list[0].completed)
-            // console.log(posts)
-            // console.log(posts[0].completed)
-            // this.removeTodo(5)
             // const doc = document.contains('#loader')
             // doc.remove()     
             createTodos('.list-group', 'li', 'input', 'label', 'i', this.list) 
@@ -188,7 +199,7 @@ export class TodoList
 
                 try {
                     if (title === '') {
-                    event.preventDefault()
+                        event.preventDefault()
                     throw new Error (`Le champ title est vide`, {cause: event})
                 //     // errorMessage = 'Le champ est vide', {cause: newTodo}
                 }   
@@ -202,7 +213,9 @@ export class TodoList
                 // document.querySelector('.alert').remove()
                 // 'input[type="radio"][name="optionSource"]
                 this.removeTodo()
+                this.modifyStatus()
                 } catch(error) {
+                    console.log(error.message, {cause: error})
                     showMessage('#liveAlertPlaceholder', 'alert alert-danger', error.message, '') 
                 }            
                 // return error    
@@ -221,6 +234,9 @@ export class TodoList
     findAllByTitle() {
         document.querySelector('button[data-filter="all"]')
             .addEventListener('click', () => {
+                removeClass('button[data-filter="done"]', 'active')
+                removeClass('button[data-filter="todo"]', 'active')
+                addClass('button[data-filter="all"]', 'active')
                 hideElements('.todo')
                 createTodos('.list-group', 'li', 'input', 'label', 'i', this.list)
                 this.removeTodo()
@@ -231,6 +247,9 @@ export class TodoList
     findTodos() {
         document.querySelector('button[data-filter="todo"]')
             .addEventListener('click', () => {
+                removeClass('button[data-filter="done"]', 'active')
+                removeClass('button[data-filter="all"]', 'active')
+                addClass('button[data-filter="todo"]', 'active')
                 const filteredElements = this.list.filter((el) =>  el?.completed == false)                
                 if (filteredElements) {
                     hideElements('.todo')
@@ -246,6 +265,9 @@ export class TodoList
     findDone() {
         document.querySelector('button[data-filter="done"]')
             .addEventListener('click', () => {
+                removeClass('button[data-filter="todo"]', 'active')
+                removeClass('button[data-filter="all"]', 'active')
+                addClass('button[data-filter="done"]', 'active')
                 const filteredElements = this.list.filter((el) => el?.completed === true)
                 if (filteredElements) {
                 hideElements('.todo')
