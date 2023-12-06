@@ -196,26 +196,21 @@ export class TodoList
             newTodo.addEventListener('submit', (event) => {
                 const data = new FormData(newTodo)
                 let title = data.get('title') 
-
+                event.preventDefault()
                 try {
-                    if (title === '') {
-                        event.preventDefault()
-                    throw new Error (`Le champ title est vide`, {cause: event})
-                //     // errorMessage = 'Le champ est vide', {cause: newTodo}
-                }   
-
-                event.preventDefault()        
-                this.addTodo(title)
-                showMessage('#liveAlertPlaceholder', 'alert alert-success', 'Todo ajouté avec succès !')
-                // sendData(i)
-                createTodo('.list-group', 'li', 'input', 'label', 'i', this.list)
-                document.querySelector('input[name="title"]').value = ''
-                // document.querySelector('.alert').remove()
-                // 'input[type="radio"][name="optionSource"]
-                this.removeTodo()
-                this.modifyStatus()
+                    if (title === '') {                        
+                        throw new Error (`Le champ title est vide`, {cause: event})
+                    }         
+                    this.addTodo(title)
+                    showMessage('#liveAlertPlaceholder', 'alert alert-success', 'Todo ajouté avec succès !')
+                    // sendData(i)
+                    createTodo('.list-group', 'li', 'input', 'label', 'i', this.list)
+                    document.querySelector('input[name="title"]').value = ''
+                    // document.querySelector('.alert').remove()
+                    // 'input[type="radio"][name="optionSource"]
+                    this.removeTodo()
+                    this.modifyStatus()
                 } catch(error) {
-                    console.log(error.message, {cause: error})
                     showMessage('#liveAlertPlaceholder', 'alert alert-danger', error.message, '') 
                 }            
                 // return error    

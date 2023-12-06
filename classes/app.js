@@ -1,5 +1,7 @@
 // import { Item } from "./item.js"
 
+import { createElement } from "../functions/dom.js"
+
 /**
  * @async
  * Fetch Json API articles et crer un élément HTML avec loading message
@@ -109,10 +111,10 @@ export function createTodos(wrapperSelector, tagName, checkbox, label, icon, arr
                 id: arrElement.id
             }
 
-            const newTodoList = createElements(tagName, li_object)
-            const newCheckbox = createElements(checkbox, checkbox_object)
-            const newLabel = createElements(label, label_object)
-            const newIcon = createElements(icon, icon_object)
+            const newTodoList = createElement(tagName, li_object)
+            const newCheckbox = createElement(checkbox, checkbox_object)
+            const newLabel = createElement(label, label_object)
+            const newIcon = createElement(icon, icon_object)
 
             if (arrElement?.completed == true) {
                 newCheckbox.setAttribute('checked', '')
@@ -161,10 +163,10 @@ export function createTodo(wrapperSelector, tagName, checkbox, label, icon, arrE
         class: 'ms-2 form-check-label'
     }
 
-    const newTodoList = createElements(tagName, li_object)
-    const newCheckbox = createElements(checkbox, checkbox_object)
-    const newLabel = createElements(label, label_object)
-    const newIcon = createElements(icon, icon_object)
+    const newTodoList = createElement(tagName, li_object)
+    const newCheckbox = createElement(checkbox, checkbox_object)
+    const newLabel = createElement(label, label_object)
+    const newIcon = createElement(icon, icon_object)
 
     // const checkedValue = newCheckbox.setAttribute('checked', '')
 
@@ -281,7 +283,7 @@ function createPost(tagName, element, subElement) {
  * @returns {HTMLElement}
  */
 export function showMessage(wrapperSelector, selector, message, color = '') {
-    let newSpan = document.querySelector(selector)
+    let newAlert = document.querySelector(selector)
     const createdSpan = document.querySelector('.alert')
     // const createdBtn = document.querySelector('.btn-close')
     const wrapper = document.querySelector(wrapperSelector)
@@ -290,34 +292,41 @@ export function showMessage(wrapperSelector, selector, message, color = '') {
         // createdBtn.remove()
     }
 
-    if (!newSpan) {
-        let input_objectSpan = {
-            role:"alert"
+    if (!newAlert) {
+        // let alert_object = {
+        //     role:'alert'
+        // }
+
+        let text_object = {
+            role:'alert',
+            class: `${selector} m-2 alert-dismissible fade show`
         }
-        newSpan = createElements('div', input_objectSpan)
-        let input_object = {
+        
+        let button_object = {
             type: 'button',
             class: 'btn-close',
             'data-bs-dismiss': 'alert',
             'aria-label': 'Close'
         }
-        let newButton = createElements('button', input_object)
-        newSpan.classList = `${selector} alert-dismissible fade show`
+
+        newAlert = createElement('div', text_object)
+        let newButton = createElement('button', button_object)
+        // let wrapper = createElement('section', alert_object)
         // newSpan.insertAdjacentElement("beforebegin", newButton)
-        newSpan.innerText = message
-        newSpan.style.color = color
-        newSpan.append(newButton)
+        newAlert.innerText = message
+        newAlert.style.color = color        
         // span.appendChild(newButton)
         // wrapper.append(newButton)
-        wrapper.append(newSpan)
+        newAlert.append(newButton)
+        wrapper.append(newAlert)
     }   
-    return newSpan
+    return newAlert
 }
 
-function createElements(name, options) {
-    let element = document.createElement(name);
-    for (let key in options) {
-        element.setAttribute(key, options[key]);
-    }
-    return element
-}
+// function createElements(name, options) {
+//     let element = document.createElement(name);
+//     for (let key in options) {
+//         element.setAttribute(key, options[key]);
+//     }
+//     return element
+// }

@@ -1,6 +1,6 @@
 import { showMessage } from "./app.js";
 import { Item, newTodo } from "./item.js";
-import { TodoList } from "./todoList.js";
+import { TodoList } from "./TodoList.js";
 
 const item = new TodoList()
 // item.removeTodo()
